@@ -15,6 +15,24 @@ void sauvegarderProduit(const Produit& p) {
     }
 }
 
+// Fonction pour sauvegarder tout l'arbre dans le fichier
+void sauvegarderArbre(Noeud* racine, ofstream& fichier) {
+    if (racine != nullptr) {
+        sauvegarderArbre(racine->gauche, fichier);
+        fichier << racine->elt.id << ";" << racine->elt.nom << ";" << racine->elt.quantite << ";" << racine->elt.prix << endl;
+        sauvegarderArbre(racine->droit, fichier);
+    }
+}
+
+// Fonction pour réécrire complètement le fichier stock
+void reecrirefichier(ABR& stock) {
+    ofstream fichier("stock.txt");
+    if (fichier.is_open()) {
+        sauvegarderArbre(stock.racine, fichier);
+        fichier.close();
+    }
+}
+
 // Fonction pour charger les produits depuis le fichier
 void chargerStock(ABR& stock) {
     ifstream fichier("stock.txt");
@@ -122,6 +140,7 @@ int main() {
                 cout << "                  ID du produit a modifier : "; cin >> id;
                 cout << "                  Nouvelle quantite : "; cin >> qte;
                 monStock.miseAJour(monStock.racine, id, qte);
+                reecrirefichier(monStock);  // Réécrire le fichier après modification
                 break;
             }
             case 4: {  // Supprimer un produit
@@ -132,7 +151,8 @@ int main() {
                 if (produit != nullptr) {
                     cout << "                  Suppression du produit: " << produit->elt.nom << endl;
                     monStock.racine = monStock.suppression(monStock.racine, id);
-                    cout << "                  Produit supprime !" << endl;
+                    reecrirefichier(monStock);  // Réécrire le fichier après suppression
+                    cout << "                  Produit supprime et fichier mis a jour !" << endl;
                 } else {
                     cout << "                  Produit non trouve." << endl;
                 }
