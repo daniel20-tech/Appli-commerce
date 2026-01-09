@@ -126,8 +126,8 @@ int main() {
                 cout << "                  Quantite : "; cin >> p.quantite;
                 cout << "                  Prix : "; cin >> p.prix;
                 monStock.racine = monStock.insertion(monStock.racine, p);
-                sauvegarderProduit(p);  // Sauvegarder dans le fichier
-                cout << "\n                  Produit ajoute et sauvegarde !" << endl;
+                reecrirefichier(monStock);  // Réécrire le fichier après ajout
+                cout << "\n                  Produit ajoute avec succes!!" << endl;
                 break;
             }
             case 2:  // Afficher l'inventaire

@@ -18,8 +18,10 @@ Noeud* ABR::insertion(Noeud* racine, Produit p) {
         racine->gauche = insertion(racine->gauche, p);
     } else if (p.id > racine->elt.id) {
         racine->droit = insertion(racine->droit, p);
+    } else {
+        // Si l'ID existe déjà, afficher un message d'erreur
+        cout << "                  ERREUR: Un produit avec l'ID " << p.id << " existe deja !" << endl;
     }
-    // Si l'ID existe déjà, on ne fait rien
 
     return racine;
 }
